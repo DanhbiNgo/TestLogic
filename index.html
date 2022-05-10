@@ -1,0 +1,163 @@
+<html>
+   <head>
+      <title>VueJs Introduction</title>
+      <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js">
+      </script>
+      <style>
+	#intro{
+	    text-align: center;
+    	display: flex;
+    	flex-direction: column;
+	}
+	#intro div{
+	margin-bottom:20px;
+	}
+        .cau3 div{
+            display:flex;
+            justify-content: center;
+            margin-bottom:5px;
+        }
+          .cau3 lable{
+              width:200px;
+          }
+          .cau3 div button{
+              margin-left:5px;
+          }
+      </style>
+   </head>
+   <body>
+      <div id = "intro" style = "text-align:center;">
+         <div class="Cau1">
+		    <h2>Câu 1</h2>
+		    <input type="text" v-model="input1"/>
+		    <button @click="findx">Find5</button>
+	        <div>Kết quả:<b>{{arr}}</b></div>
+	       </div>
+	       
+	       <div class="Cau1">
+		    <h2>Câu 2</h2>
+		    <input type="text" v-model="input2"/>
+		    <button @click="find2">Find</button>
+	        <div>Kết quả:<b>{{arr2}}</b></div>
+	       </div>
+	       <div class="Cau3">
+		    <h2>Câu 3</h2>
+		    <div>
+		        <lable>Họ và Tên</lable>
+		        <input type="text" v-model="name"/>
+		    </div>
+		    <div>
+		        <lable>Email</lable>
+		        <input type="text" v-model="email"/>
+		    </div>
+		    <div>
+		        <lable>Số Điện Thoại</lable>
+		        <input type="text" v-model="phone"/>
+		    </div>
+		    <div>
+		        <lable>Nội dung liên hệ</lable>
+		        <textarea v-model="inner"></textarea>
+		    </div>
+		    <div>
+		      <button @click="SendToData">Submit</button>
+		    <button @click="resetField">Reset</button>
+		    </div>
+		    
+		    <div>
+		        <p><b>DataSend:</b></p>
+		        <dir v-for="(ars,index) of arr3" :key="index">
+		            <div><b>{{index}}</b>:{{ars}}</div>
+		        </dir>
+		        
+		        </div>
+	       </div>
+      </div>
+      <script type = "text/javascript">
+         var vue_det = new Vue({
+            el: '#intro',
+            data: {
+               input1:null,
+		        arr:null,
+		        input2:null,
+		        arr2:null,
+		        name:null,
+		        email:null,
+		        phone:null,
+		        inner:null,
+		        arr3:{ name: null,
+		                email:null,
+		            phone:null,
+		            inner:null
+		        }
+		 
+            },
+		    methods:{
+		        resetField(){
+		            this.name = ""
+		             this.email = ""
+		              this.phone = ""
+		               this.inner = ""
+		        },
+		        SendToData(){
+		            this.arr3.name = this.name
+		            this.arr3.email = this.email
+		            this.arr3.phone = this.phone
+		            this.arr3.inner = this.inner
+		        },
+		        findx(){
+			    let index = this.input1.split(',')
+			    this.arr = this.find5(index)
+			    
+		        },
+		        find2(){
+		          let index = this.input2.split(', ').join(',')
+		          let arr = index.split(',')
+		            this.arr2 = this.findif(arr).toString()
+		        },
+		        find5(arr){
+		            for(let i = 0;i<arr.length-1 ; i++){
+                        let c = 0 ;
+                       for(let j = i + 1 ; j<arr.length ;j ++){
+                           if(parseInt(arr[i]) < parseInt(arr[j])){
+                               c = arr[j]
+                               arr[j] = arr[i]
+                               arr[i] = c
+                           }
+                       }
+                    }
+                    let xr = arr.slice(0,5)
+                    let result = xr.map((x)=> { 
+                          return parseInt(x,10)
+                        })
+                    return result
+		        },
+		        findif(arr){
+		             let PrintArr = {}
+                for(let i = 0;i<arr.length-1 ; i++){
+                   for(let j = i+1 ; j<arr.length ;j ++){
+                            if(arr[i].toString()==arr[j].toString()){
+                                PrintArr[arr[i]] = 1;
+                            }
+                   }
+                }
+                  for (const prop in PrintArr) {
+                        let c = 1 
+                       for(let i = 0;i<arr.length ; i++){
+                            if(arr[i].toString() == prop.toString()){
+                               PrintArr[prop] = c++
+                        }
+                    }
+                }
+                let arrs = Object.values(PrintArr);
+                let max = Math.max(...arrs);
+		          return  this.getKeyByValue(PrintArr,max)
+		        },
+		        getKeyByValue(object, value) {
+              return Object.keys(object).find(key => object[key] === value);
+            }
+            		
+		}
+         });
+      </script>
+   </body>
+</html>
