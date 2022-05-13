@@ -141,17 +141,10 @@
                 findif(arr) {
                     let PrintArr = {}
                     for (let i = 0; i < arr.length - 1; i++) {
-                        for (let j = i + 1; j < arr.length; j++) {
+                        let c = 0 
+                        for (let j = 0; j < arr.length; j++) {
                             if (arr[i].toString() == arr[j].toString()) {
-                                PrintArr[arr[i]] = 1;
-                            }
-                        }
-                    }
-                    for (const prop in PrintArr) {
-                        let c = 1
-                        for (let i = 0; i < arr.length; i++) {
-                            if (arr[i].toString() == prop.toString()) {
-                                PrintArr[prop] = c++
+                                PrintArr[arr[i]] = c++;
                             }
                         }
                     }
